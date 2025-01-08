@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
+from unittest.mock import patch
 from .models import (
     Crisis,
     CrisisAssistance,
@@ -9,9 +10,12 @@ from .models import (
 )
 
 class CrisisModelTest(TestCase):
-
     @classmethod
-    def setUpTestData(cls):
+    @patch('requests.post')
+    def setUpTestData(cls, mock_post):
+         # Arrange: Mock the POST request to return a status code of 200
+        mock_post.return_value.status_code = 200
+
         # Create a CrisisType and CrisisAssistance instance to use for the tests
         cls.crisis_type = CrisisType.objects.create(name="Flood")
         cls.crisis_assistance = CrisisAssistance.objects.create(name="Medical Assistance")
@@ -25,6 +29,9 @@ class CrisisModelTest(TestCase):
             crisis_location1="Riverbank",
             visible=True
         )
+
+        # assert called to notification
+        mock_post.assert_called()
 
         # Assign many-to-many relations using .set()
         cls.crisis.crisis_type.set([cls.crisis_type])
