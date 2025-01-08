@@ -18,6 +18,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Set environment variables as per the Dockerfile
+      - name: Set environment variables
+        run: |
+          echo "DJANGO_ROOT=./deans_api" >> $GITHUB_ENV
+
       # Set up Python 3.6
       - name: Set up Python 3.6
         uses: actions/setup-python@v5
