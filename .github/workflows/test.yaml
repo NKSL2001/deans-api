@@ -1,0 +1,44 @@
+name: Django CI with Python 3.6
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: [3.6]
+
+    steps:
+      # Check out the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up Python 3.6
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Set up the database (assuming you're using SQLite, adjust if using PostgreSQL, MySQL, etc.)
+      - name: Set up database
+        run: |
+          chmod +x start_django.sh
+
+      # Run tests
+      - name: Run tests
+        run: |
+          python manage.py test
