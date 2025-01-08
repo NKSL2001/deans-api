@@ -33,6 +33,7 @@ jobs:
       - name: Set environment variables
         run: |
           echo "DJANGO_ROOT=./deans_api" >> $GITHUB_ENV
+          echo "PRODUCTION=0" >> $GITHUB_ENV
 
       # Set up Python 3.6
       - name: Set up Python 3.6
@@ -49,7 +50,7 @@ jobs:
       # Set up the database (assuming you're using SQLite, adjust if using PostgreSQL, MySQL, etc.)
       - name: Set up database
         run: |
-          chmod +x start_django.sh && bash start_django.sh
+          chmod +x start_django.sh && sh start_django.sh
 
       # Run tests
       - name: Run tests
