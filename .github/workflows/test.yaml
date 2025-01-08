@@ -49,7 +49,7 @@ jobs:
       # Set up the database (assuming you're using SQLite, adjust if using PostgreSQL, MySQL, etc.)
       - name: Set up database
         run: |
-          ls && chmod +x start_django.sh
+          chmod +x start_django.sh && bash start_django.sh
 
       # Run tests
       - name: Run tests
