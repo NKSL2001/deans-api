@@ -43,4 +43,4 @@ jobs:
       # Run tests
       - name: Run tests
         run: |
-          python manage.py test
+          cd ./deans_api && python manage.py test
