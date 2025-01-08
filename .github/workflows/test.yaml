@@ -13,6 +13,14 @@ jobs:
   test:
     runs-on: ubuntu-20.04
 
+    services:
+      # Mock the notification service (responds with 200 to /socialmessages/)
+      notification:
+        image: httpd:latest
+        options: --network host
+        ports:
+          - 8000:80  # Expose port 8000 on the host machine to port 80 on the container# Create a simple custom configuration file for httpd
+          
     steps:
       # Check out the code
       - name: Checkout code
